@@ -1,0 +1,29 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVER:localhost:9092}
+      group-id: mygroupid
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+        spring.json.use.type.headers: "false"
+    topic:
+        transactions: ${KAFKA_TOPIC:emailtpc}
+  datasource:
+    username: root
+    url: ${BANCO_DADOS:jdbc:mysql://localhost:3306/transacoes}
+    testWhileIdle: 'true'
+    validationQuery: SELECT 1
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      ddl-auto: update
+    show-sql: 'true'
+server:
+  port : 8081
